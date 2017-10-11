@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>PhotoMap</title>
+<link href="style.css" rel='stylesheet'>
+<link href="animate.css" rel='stylesheet'>
+
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.css' rel='stylesheet' />
+    <link href="https://fonts.googleapis.com/css?family=Righteous|Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.1/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.1/mapbox-gl-geocoder.css' type='text/css' />
+</head>
+<body>
+<div class="navbar">
+	<div class="brand">
+		<div class="icon"><i class="fa fa-camera-retro" aria-hidden="true"></i>
+		</div>PHOTOMAP</div>
+
+	</div>
+	<div id="random-location">
+		<a href="#">
+		<i class="fa fa-globe" aria-hidden="true"></i>
+		Random Location
+		</a>
+	</div>
+	<div class="menu">
+		<a href="#how-modal" rel="modal:open" id="how-link"><i class="fa fa-question-circle-o" aria-hidden="true"></i>
+How to Use</a>
+		<a href="#about-modal" id="#about-modal" rel="modal:open"><i class="fa fa-hand-peace-o" aria-hidden="true"></i>
+About</a>
+		</ul>
+	</div>
+</div>
+<div id='map' class="animated slideInLeft"></div>
+<div class="detail-info-container hidden animated slideInRight"><h3 class="sub-title">Detail Info</h3>
+	<div class="close-btn"><a href="#" class="close-link"><i class="fa fa-times" aria-hidden="true"></i></a>
+</div><div class="single-data"></div>
+<div class="flickr-link"><a href="#" class="flickr-link" target="_blank"><i class="fa fa-flickr" aria-hidden="true"></i>
+ View on Flickr</a></div>
+</div>
+<script src="https://use.fontawesome.com/97e749fe81.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous">
+</script>
+<script src="jquery.modal.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="jquery.modal.css" type="text/css" media="screen" />
+<script src="app.js">
+</script>
+
+<div id="about-modal"  style="display:none;">
+	<h2>About <span class="capitalize"><i class="fa fa-camera-retro" aria-hidden="true"></i>Photomap</span></h2>
+	<p>Explore photos from around the world uploaded by Flickr users.</p><p> Find inspiration - new locations, new angles, for your photography. </p><p>Questions, comments?</p><p><a href="mailto:ykatesque@mail">Contact Me</a></p><p> Built with <i class="fa fa-heart" aria-hidden="true"></i>  using <a href="www.flickr.com">Flickr</a> and <a href="www.mapbox.com">Mapbox</a>
+
+</div>
+<div id="how-modal"  style="display:none;">
+	<h2>How to Use</h2>
+	<p>Search for photos at interesting locations by using the search bar in the upper right corner of the map.<P>
+	<p>Allow location services to locate you and discover interesting photos taken around you.</p>
+</div>
+</body>
+
+</body>
+</html>

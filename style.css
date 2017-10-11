@@ -1,0 +1,448 @@
+
+
+/* Common style */
+ figure {
+	position: relative;
+	float: left;
+	overflow: hidden;
+	margin: 10px 1%;
+	min-width: 150px;
+	max-width: 150px;
+	max-height: 150px;
+	width: 48%;
+	height: auto;
+	background: #3085a3;
+	text-align: center;
+	cursor: pointer;
+}
+
+figure img {
+	position: relative;
+	display: block;
+	min-height: 100%;
+	max-width: 100%;
+	opacity: 0.8;
+}
+
+ figure figcaption {
+	padding: 0;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 1.25em;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+ figure figcaption::before,
+ figure figcaption::after {
+	pointer-events: none;
+}
+
+ figure figcaption,
+ figure figcaption > a {
+	position: absolute;
+	top: 22px;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+/* Anchor will cover the whole item by default */
+/* For some effects it will show as a button */
+ figure figcaption > a {
+	z-index: 1000;
+	text-indent: 200%;
+	white-space: nowrap;
+	font-size: 0;
+	opacity: 0;
+}
+figure h2 {
+	word-spacing: -0.15em;
+	font-weight: 300;
+}
+
+ figure h2 span {
+	font-weight: 800;
+}
+
+figure h2,
+ figure p {
+	margin: 0;
+}
+
+ figure p {
+	letter-spacing: 1px;
+	font-size: 68.5%;
+}
+
+
+
+figure.effect-goliath {
+	background: black;
+}
+
+figure.effect-goliath img,
+figure.effect-goliath h2 {
+	-webkit-transition: -webkit-transform 0.35s;
+	transition: transform 0.35s;
+}
+
+
+.flickr-link  {
+	text-decoration: none;
+	font-family: Exo;
+	font-size: 16px;
+	padding-top: 5px;
+	padding-bottom: 10px;
+	color: #c1273e;
+}
+
+
+figure.effect-goliath img {
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+figure.effect-goliath h2,
+figure.effect-goliath p {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	padding: 30px;
+}
+
+figure.effect-goliath p {
+	text-transform: none;
+	font-size: 90%;
+	opacity: 0;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: translate3d(0,50px,0);
+	transform: translate3d(0,50px,0);
+}
+
+figure.effect-goliath:hover img {
+	-webkit-transform: translate3d(0,-31px,0);
+	transform: translate3d(0,-31px,0);
+}
+
+figure.effect-goliath:hover h2 {
+	-webkit-transform: translate3d(0,-100px,0);
+	transform: translate3d(0,-100px,0);
+}
+
+figure.effect-goliath:hover p {
+	opacity: 1;
+	-webkit-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+	text-transform: uppercase;
+    font-size: 12px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#map { 
+	position: absolute; 
+	bottom:0; 
+	top: 40px;
+	width:100%; 
+	height: 93%;
+	-webkit-transition: width 1s; /* Safari */
+    transition: width 1s;
+	
+}
+
+.navbar{
+	height: 40px;
+	background-color: #1a1a1a;
+	width: 100%;
+	box-sizing: border-box;
+	top: 0px;
+	color: #e0e0e0;
+	position: fixed;
+}
+
+.close-btn {
+	position: absolute;
+	top: 34px;
+	left: 88%;
+	
+}
+
+
+.close-link {
+	 color: black;
+   font-size: 30px;
+}
+
+.menu {
+
+	color: white;
+	float: right;
+	padding: 10px;
+	box-sizing: border-box;
+	top: 0px;
+	right: 0px;
+	position:fixed;
+	width: 200px;
+	z-index: 20;
+}
+
+.menu a {
+	color: #d4d4d4;
+	padding-left: 15px;
+	font-size: 12px;
+	text-transform: uppercase;
+	font-family: Roboto;
+	text-decoration: none;
+}
+
+.menu i {
+	padding-right: 3px;
+}
+
+
+.half-map{
+	/*width: 50% !important;*/
+}
+
+.more-link{
+	display: inline-block;
+	height: 50%;
+	padding-top: 25px;
+	box-sizing: border-box;
+	font-size: 18px;
+}
+
+.menu a:hover{
+	color: white;
+}
+.brand {
+	padding-top: 0px;
+	font-size: 20px;
+	letter-spacing: 3px;
+	font-family: 'Exo';
+	color: white;
+	margin-left: 10px;
+}
+
+
+#random-location {
+	position: absolute;
+	left: 40%;
+	top: 10px;
+	color: #d4d4d4;
+}
+
+#random-location a {
+	color: #d4d4d4;
+	text-decoration: none;
+	font-family: Roboto;
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+.marker {
+  background-image: url('camera-icon.png');
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+
+.mapboxgl-popup {
+  max-width: 200px;
+
+}
+
+#about-modal > p > i {
+	color: #3a3a3a;
+
+    opacity: 0.6;
+    font-size: 18px;
+}
+
+#about-modal p {
+	float: left;
+	padding: 0;
+	margin: 10px;
+
+}
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+#about-modal p > a, #how-modal p > a {
+	color: black;
+}
+
+#about-modal, #how-modal {
+	font-family: Roboto;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+#about-modal, #how-modal p {
+	text-transform: none;
+	text-align: left;
+}
+
+.capitalize {
+	text-transform: uppercase;
+}
+
+#random-location a:hover{
+	color: white;
+}
+.icon {
+	display: inline-block;
+	padding: 5px;
+	color: white;
+	font-size: 25px;
+}
+
+.sub-title {
+	text-transform: uppercase;
+	border-bottom: 1px solid grey;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+body {
+	margin: 0px;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.detail-info-container{
+	position: relative;
+	font-family: Roboto;
+    left: 50%;
+    top: 40px;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-sizing: border-box;
+    max-width: 50%;
+    padding: 20px;
+}
+
+h5{
+	margin: 0px;
+	padding: 0px;
+	padding-bottom: 10px;
+	font-size: 22px;
+}
+.large-img img {
+	max-width:100%;
+	max-height:100%;
+}
+
+.large-img {
+	width: 90%;
+	max-height: 500px;
+}
+.hidden {
+	display: none;
+}
+
+.img-container > span {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+.img-container:hover > span {
+    display: inline-block;
+    bottom: 10px;
+    margin: 0 auto;
+   	height: 50%
+    background: rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+.single-data {
+	overflow: hidden;
+}
+
+
+
+.no-results {
+	color: white;
+    text-shadow: 2px 2px 4px #000000;
+    color: white;
+    z-index: 100;
+    position: absolute;
+    top: 35%;
+    padding: 20px;
+    opacity: 0.8;    
+    width: 100%;
+    text-align: center;
+    font-size: 22px;
+    text-transform: uppercase;
+}
+
+.try-again {
+  font-size: 16px;
+  margin-top: 10px
+}
+
+
+
+@media screen and (max-width: 500px) {
+  #random-location {
+    display:none;
+  }
+
+  .half-map {
+  	width: 100% !important;
+  	height:100% !important;
+  }
+
+  .detail-info-container {
+  	background-color: white;
+    width: 90% !important;
+    left: 0;
+    max-width: 100%;
+  }
+}
+
+
+}
+
+
+
+@media screen and (max-width: 800px) {
+	.detail-info-container {
+  	background-color: white;
+    width: 100% !important;
+    left: 25% !important;
+    max-width: 100%;
+    height: auto;
+  }
+
+   .half-map {
+  	width: 100% !important;
+  	height:100% !important;
+  }
+
+}	
+
+

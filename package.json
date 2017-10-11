@@ -1,0 +1,19 @@
+{
+  "name": "flickrmap",
+  "version": "1.0.0",
+  "description": "FLICKR PHOTO MAP ![Alt text](/relative/path/to/img.jpg?raw=true \"Screenshots\")",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint-config-airbnb-base": "^12.0.2",
+    "eslint-plugin-import": "^2.7.0"
+  },
+  "dependencies": {
+    "eslint-config-airbnb": "^16.0.0"
+  }
+}
