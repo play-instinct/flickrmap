@@ -75,6 +75,9 @@ randomLocations:[
 ]}
 
 
+mapboxgl.accessToken = 'pk.eyJ1IjoieWthdGVzcXVlIiwiYSI6ImNqN3V1bmphMjRlN3YyeHBrbDV0cmYyZzkifQ.IkEhhVc-aWVnuLsnNlf5Zg';
+
+
 let map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/ykatesque/cj86z79ws33k12ro5es8c7yqx',
@@ -84,7 +87,6 @@ let map = new mapboxgl.Map({
 
 
 
-mapboxgl.accessToken = 'pk.eyJ1IjoieWthdGVzcXVlIiwiYSI6ImNqN3V1bmphMjRlN3YyeHBrbDV0cmYyZzkifQ.IkEhhVc-aWVnuLsnNlf5Zg';
 
 
 
@@ -228,8 +230,11 @@ function makeGeoJson(){
 function displayDetailData(obj){
     let url = obj.flickr_url;
     let author_url = obj.author_url;
+    let author_name = "Photo by" + obj.author_name;
     $('.flickr-link').attr("href", url);
     $('.author-link').attr('href', author_url);
+    $('a.author-link').text(author_name);
+
     $('.single-data').empty().append(`<h5>${obj.title}</h5><div class="large-img"><img src="${obj.photo_url}"></div>`);
 }
 
@@ -297,6 +302,12 @@ $('body').on('click', '.effect-goliath', function(e){
     findPhotoByKey(state.photos, "thumb_url", img);
 });
 
+
+$('body').on('click', '.mapboxgl-popup-close-button', function(e){
+    e.preventDefault();
+    $('.detail-info-container').addClass('hidden');
+
+})
 
 $('body').on('click', '.close-link', function(e){
     e.preventDefault();
