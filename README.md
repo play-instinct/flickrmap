@@ -1,2 +1,2 @@
 FLICKR PHOTO MAP
-![Alt text](/relative/path/to/img.jpg?raw=true "Screenshots")
+![SCREENSHOT 1](/s1.jpg "SCREENSHOT 1")
