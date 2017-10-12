@@ -150,6 +150,7 @@ function getDataFromFlickr(lat, lon, callback) {
             photo_url: 'https://farm' + item.farm + '.staticflickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_z.jpg',
             thumb_url: 'https://farm' + item.farm + '.staticflickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_q.jpg',
             flickr_url: 'https://flickr.com/' + item.owner + '/' + item.id,
+            large_photo_url: 'https://farm' + item.farm + '.staticflickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_b.jpg',
             author_url: 'https://www.flickr.com/photos/'+ item.owner,
             author_id: item.owner,
             title: item.title,
@@ -234,8 +235,10 @@ function displayDetailData(obj){
     $('.flickr-link').attr("href", url);
     $('.author-link').attr('href', author_url);
     $('a.author-link').text(author_name);
+    $('.single-data').empty().append(`<h5>${obj.title}</h5><figure class="effect-goliath large-img"><img src="${obj.photo_url}" alt="img23" class="${obj.photo_id}"/>
+                        <figcaption><p>View Full Screen</p><a href="#enlarge-modal"  rel="modal:open" class="fullscreen-link" >View more</a></figcaption></figure>`);
 
-    $('.single-data').empty().append(`<h5>${obj.title}</h5><div class="large-img"><img src="${obj.photo_url}"></div>`);
+    // $('.single-data').empty().append(`<h5>${obj.title}</h5><div class="large-img"><img src="${obj.photo_url}"></div>`);
 }
 
 
@@ -323,4 +326,21 @@ $('body').on('click', '.close-link', function(e){
 
 });
 
+
+$('body').on('click', '.fullscreen-link', function(e){
+    e.preventDefault();
+    let img_id = $('.large-img img').attr("class");
+    var result = state.photos.filter(function( obj ) {
+    return obj.photo_id === img_id;
+    });
+    let url = result[0].large_photo_url;
+    $('.fullscreen-img').attr("src", url);
+})
+
+
+
+$('body').on('click', '.fullscreen-img', function(e){
+    e.preventDefault();
+    $.modal.close();
+})
 
