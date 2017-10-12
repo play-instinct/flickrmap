@@ -231,7 +231,7 @@ function makeGeoJson(){
 function displayDetailData(obj){
     let url = obj.flickr_url;
     let author_url = obj.author_url;
-    let author_name = "Photo by" + obj.author_name;
+    let author_name = "Photo by " + obj.author_name;
     $('.flickr-link').attr("href", url);
     $('.author-link').attr('href', author_url);
     $('a.author-link').text(author_name);
