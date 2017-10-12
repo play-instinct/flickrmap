@@ -153,6 +153,13 @@ figure.effect-goliath:hover p {
 }
 
 
+.custom-popup .leaflet-popup-content-wrapper {
+
+  transition-property: all;
+  transition-property: transform;
+      transition-duration: 3s;
+
+}	
 
 
 .mapboxgl-ctrl-top-right .mapboxgl-ctrl {

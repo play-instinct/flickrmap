@@ -294,6 +294,13 @@ $('#random-location').on('click', function (e) {
 });
 
 
+
+$("#map").bind("DOMNodeInserted",function(){
+    $('.mapboxgl-popup-content').addClass('animated fadeIn')
+});
+
+
+
 $('body').on('click', '.effect-goliath', function(e){
     e.preventDefault();
     $('#map').addClass('half-map');
