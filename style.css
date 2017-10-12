@@ -428,6 +428,9 @@ h5{
     width: 90% !important;
     left: 0;
     max-width: 100%;
+    margin-top: 80px;
+    height: auto;
+    margin-left: 20px;
   }
 	
 }
