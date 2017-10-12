@@ -39,7 +39,39 @@ const state = {
             "name": "San Paolo, Brazil",
             long: -46.633309,
             lat: -23.550520
-        }
+        },
+         {
+            "name": "Istanbul, Turkey",
+            long: 28.978359,
+            lat: 41.008238
+        },
+         {
+            "name": "Marrakesh, Morroco",
+            long: -7.981084,
+            lat: 31.629472
+        },
+         {
+            "name": "Bucaramanga, Colombia",
+            long: -73.122742,
+            lat: 7.119349
+        },
+        {
+            "name": "Seattle, Washington",
+            long: -122.332071,
+            lat: 47.606209
+        },
+          {
+            "name": "Las Vegas, Nevada",
+            long: -115.139830,
+            lat: 36.169941
+        },
+
+        {
+            "name": "Las Vegas, Nevada",
+            long: -115.139830,
+            lat: 36.169941
+        },
+
 
     ]
     
@@ -65,12 +97,6 @@ let geocoder =  new MapboxGeocoder({
 
 map.addControl(geocoder);
 
-map.addControl(new mapboxgl.GeolocateControl({
-    positionOptions: {
-        enableHighAccuracy: true
-    },
-    trackUserLocation: true
-}));
 
 map.on('load', function() {
     map.addSource('single-point', {
@@ -108,19 +134,13 @@ map.on('load', function() {
 
 
 
-function changeMap(lat, lon){
-
-}
-
-
-
 function getDataFromFlickr(lat, lon, callback) {
     $('.no-results').remove();
     state.photos = [];
     state.currentLat = lat,
     state. currentLong = lon
     const settings = {
-    url: 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a6342f1b1a90efed3c5276f7ea8bd15a&lat=' + lat + '&lon='+ lon + '&format=json&nojsoncallback=1',
+    url: 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a6342f1b1a90efed3c5276f7ea8bd15a&lat=' + lat + '&lon='+ lon + '&extras=geo%2C+owner_name&format=json&nojsoncallback=1',
     dataType: 'json',
     type: 'GET',
     success: callback,
@@ -129,22 +149,26 @@ function getDataFromFlickr(lat, lon, callback) {
   console.log('GETTING DATA')
   $.ajax(settings).done(function(data) {
     state.photos = [];
-    result = data.photos.photo.slice(0, 60)
+    result = data.photos.photo.slice(0, 100)
     console.log(result.length)
     if (result.length > 0) {
         state.photos = result.map(item => ({
         photo_url: 'https://farm' + item.farm + '.staticflickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_z.jpg',
         thumb_url: 'https://farm' + item.farm + '.staticflickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_q.jpg',
         flickr_url: 'https://flickr.com/' + item.owner + '/' + item.id,
+        author_url: 'https://www.flickr.com/photos/'+ item.owner,
         author_id: item.owner,
         title: item.title,
         farm: item.farm,
+        author_name: item.ownername,
+        lat: item.latitude,
+        long: item.longitude,
         photo_id: item.id,
         server: item.server,
         secret: item.secret,
-
         }));
-        getGeoData(callback);
+        console.log(state.photos)
+        makeGeoJson(state.photos);
 
     }
       else {
@@ -154,6 +178,8 @@ function getDataFromFlickr(lat, lon, callback) {
 
     });
 
+
+
 }
 
 
@@ -162,53 +188,11 @@ function errorLog(){
 }
 
 
-function getGeoData(callback){
-console.log('in geo data')
-let all = [];
-if (state.photos.length > 0 ) {
-     state.photos.forEach( function(x) {
-    all.push(
-        $.ajax({
-            method: "GET",
-            dataType: 'json',
-            url: 'https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&api_key=a6342f1b1a90efed3c5276f7ea8bd15a&photo_id=' + x.photo_id + '&format=json&nojsoncallback=1',
-        })
-    );
- });
-
-}
-Promise.all(all).then(function(data){
-    console.log('hello')
-    data.forEach(function result(result){
-        console.log(result)
-       addLocationToState(result);
-    });
-     callback();
-
-})
-}
-
-
-function addLocationToState(result, obj){
-    console.log('in ADD LOCATION')
-    const photolocation = result.photo;
-    let lat = photolocation.location.latitude;
-    let long = photolocation.location.longitude;
-    const index = state.photos.findIndex(function(item){
-        return item.photo_id === result.photo.id;
-
-    });
-    state.photos[index].lat = lat;
-    state.photos[index].long = long;
-
-// obj["lat"] = lat;
-// obj["long"] = long;
-}
 
 
 function noResults(){
     console.log('no results');
-    state.photos = {};
+    state.photos = [];
     $('#map').append(`<div class="no-results">No Results at this Location. <div class="try-again">Please try again.</div></div>`)
 
 }
@@ -220,6 +204,7 @@ function noResults(){
 
 
 function makeGeoJson(){
+    console.log('in make geojson')
 
       state.geojson = {
       "type": "FeatureCollection",
@@ -239,14 +224,14 @@ function makeGeoJson(){
         type: "Point",
         coordinates: [
           x.long,
-          x.lat
+          x.lat,
         ]
       } })
    });
    }
 
 
-    state.geojson.features.forEach(function(marker) {
+ state.geojson.features.forEach(function(marker) {
       var el = document.createElement('div');
       el.className = 'marker';
     new mapboxgl.Marker(el)
@@ -270,14 +255,11 @@ function makeGeoJson(){
 
 
 function displayDetailData(obj){
+    let url = obj.flickr_url
+    let author_url  
 
-let url = obj.flickr_url 
-
-$('.flickr-link').attr("href", url);
-// $(`<h5>${obj.title}</h5><div class="large-img"><img src="${obj.photo_url}"></div>`).appendTo(".single-data").hide().fadeIn(300);
-  $('.single-data').empty().append(
-
-    `<h5>${obj.title}</h5><div class="large-img"><img src="${obj.photo_url}"></div>`)
+    $('.flickr-link').attr("href", url);
+    $('.single-data').empty().append(`<h5>${obj.title}</h5><div class="large-img"><img src="${obj.photo_url}"></div>`);
 
 
 
@@ -294,7 +276,7 @@ function findPhotoByKey(array, key, value) {
             displayDetailData(array[i])
             }
     }
-    return null;
+    return array[i];
 }
 
 
@@ -316,7 +298,7 @@ function geoLocateAndCallAPI() {
                 center: [currLocation.long, currLocation.lat],
                 zoom: 12,
             });
-            getDataFromFlickr(currLocation.lat, currLocation.long, makeGeoJson)
+            getDataFromFlickr(currLocation.lat, currLocation.long)
 
         }, function() {
             console.log('rendering default map')
@@ -337,8 +319,9 @@ $('#random-location').on('click', function (e) {
     let lat = randomlocation.lat
     let long = randomlocation.long
     state.photos = []
+    $('.detail-info-container').addClass('hidden');
     map.flyTo({center: [long, lat],  zoom: 12});
-    getDataFromFlickr(lat, long, makeGeoJson);
+    getDataFromFlickr(lat, long);
     // let lat =   (-74.50 + (Math.random() - 0.5) * 10); 
     // let long =  (40 + (Math.random() - 0.5) * 10);
     // state.photos = [];
