@@ -104,7 +104,7 @@ map.on('load', function() {
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
   geocoder.on('result', function(ev) {
-    $(#map).removeClass('half-map');
+    $('#map').removeClass('half-map');
     $('.detail-info-container').addClass('hidden');
     let coord = ev.result.geometry.coordinates;
     let geolong = coord[1];
@@ -155,6 +155,7 @@ function getDataFromFlickr(lat, lon, callback) {
         secret: item.secret,
       }));
       makeGeoJson(state.photos);
+      console.log(state.photos);
 
     } else {
       state.photos = [];
@@ -236,14 +237,6 @@ function displayDetailData(obj) {
 
 
 
-function findPhotoByKey(array, key, value) {
-  for (var i = 0; i < array.length; i++) {
-    if (array[i][key] === value) {
-      displayDetailData(array[i])
-    }
-  }
-  return array[i];
-};
 
 
 
@@ -304,7 +297,8 @@ $('body').on('click', '.effect-goliath', function(e) {
   $('#map').addClass('half-map');
   $('.detail-info-container').removeClass('hidden');
   let img = $(this).parent().find("img")[0].src;
-  findPhotoByKey(state.photos, "thumb_url", img);
+  const found = state.photos.find(item => item.thumb_url === img);
+  displayDetailData(found);
 });
 
 
@@ -325,9 +319,7 @@ $('body').on('click', '.close-link', function(e) {
 $('body').on('click', '.fullscreen-link', function(e) {
   e.preventDefault();
   let img_id = $('.large-img img').attr("class");
-  var result = state.photos.filter(function(obj) {
-    return obj.photo_id === img_id;
-  });
+  var result = state.photos.filter(function(obj) {return obj.photo_id === img_id;});
   let url = result[0].large_photo_url;
   $('.fullscreen-img').attr("src", url);
 });
