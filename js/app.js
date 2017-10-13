@@ -67,7 +67,9 @@ mapboxgl.accessToken =
   'pk.eyJ1IjoieWthdGVzcXVlIiwiYSI6ImNqN3V1bmphMjRlN3YyeHBrbDV0cmYyZzkifQ.IkEhhVc-aWVnuLsnNlf5Zg';
 
 
-let map = new mapboxgl.Map({
+let map;
+
+map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/ykatesque/cj86z79ws33k12ro5es8c7yqx',
   center: [37.6173, 55.754093],
@@ -118,7 +120,6 @@ map.on('load', function() {
 
 function getDataFromFlickr(lat, lon, callback) {
   $('.no-results').remove();
-  state.photos = [];
   state.currentLat = lat,
     state.currentLong = lon
   const settings = {
@@ -131,18 +132,13 @@ function getDataFromFlickr(lat, lon, callback) {
     error: errorLog
   };
   $.ajax(settings).done(function(data) {
-    state.photos = [];
     let result = data.photos.photo.slice(0, 100)
     if (result.length > 0) {
-      state.photos = result.map(item => ({
-        photo_url: 'https://farm' + item.farm + '.staticflickr.com/' +
-          item.server + '/' + item.id + '_' + item.secret + '_z.jpg',
-        thumb_url: 'https://farm' + item.farm + '.staticflickr.com/' +
-          item.server + '/' + item.id + '_' + item.secret + '_q.jpg',
+      new_photos = result.map(item => ({
+        photo_url: 'https://farm' + item.farm + '.staticflickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_z.jpg',
+        thumb_url: 'https://farm' + item.farm + '.staticflickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_q.jpg',
         flickr_url: 'https://flickr.com/' + item.owner + '/' + item.id,
-        large_photo_url: 'https://farm' + item.farm +
-          '.staticflickr.com/' + item.server + '/' + item.id + '_' +
-          item.secret + '_b.jpg',
+        large_photo_url: 'https://farm' + item.farm + '.staticflickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_b.jpg',
         author_url: 'https://www.flickr.com/photos/' + item.owner,
         author_id: item.owner,
         title: item.title,
@@ -154,11 +150,10 @@ function getDataFromFlickr(lat, lon, callback) {
         server: item.server,
         secret: item.secret,
       }));
-      makeGeoJson(state.photos);
-      console.log(state.photos);
+      state.photos.push.apply(state.photos, new_photos);
+      makeGeoJson(new_photos);
 
     } else {
-      state.photos = [];
       noResults();
     }
 
@@ -172,7 +167,6 @@ function errorLog() {
 };
 
 function noResults() {
-  state.photos = [];
   $('#map').append(
     `<div class="no-results">No Results at this Location. <div class="try-again">Please try again.</div></div>`
   )
@@ -214,7 +208,7 @@ function makeGeoJson() {
           offset: 25
         }) // add popups
         .setHTML(
-          `<figure class="effect-goliath"><img src="${marker.properties.thumb_url}" alt="img23"/>
+          `<figure class="effect-goliath popup"><img src="${marker.properties.thumb_url}" alt="img23"/>
                         <figcaption><p>View Details</p><a href="#" class="view-link">View more</a></figcaption></figure>`
         )).addTo(map);
 
@@ -274,7 +268,6 @@ $('#random-location').on('click', function(e) {
     state.randomLocations.length)];
   let lat = randomlocation.lat;
   let long = randomlocation.long;
-  state.photos = [];
   $('.detail-info-container').addClass('hidden');
   map.flyTo({
     center: [long, lat],
@@ -292,7 +285,7 @@ $('#map').bind('DOMNodeInserted', function() {
 
 
 
-$('body').on('click', '.effect-goliath', function(e) {
+$('body').on('click', '.popup', function(e) {
   e.preventDefault();
   $('#map').addClass('half-map');
   $('.detail-info-container').removeClass('hidden');
